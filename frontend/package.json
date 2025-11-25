@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "serve": "npx http-server -c-1 -p 5173 .",
-    "test": "jest --coverage"
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --coverage"
   },
   "devDependencies": {
     "http-server": "^14.1.1",

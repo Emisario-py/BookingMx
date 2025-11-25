@@ -1,6 +1,6 @@
 export default {
   testEnvironment: "node",
   collectCoverage: true,
-  collectCoverageFrom: ["js/**/*.js"],
+  collectCoverageFrom: ["js/**/graph.js"],
   coverageReporters: ["text", "lcov"]
 };

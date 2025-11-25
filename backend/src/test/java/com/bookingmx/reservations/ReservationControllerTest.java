@@ -16,19 +16,36 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+/**
+ * Unit tests for {@link ReservationController}.
+ *
+ * <p>This test class ensures that the controller correctly delegates work to
+ * the {@link ReservationService}, and that returned responses contain the
+ * appropriate mapped data. Each endpoint is tested independently to validate
+ * proper request handling, data transformation, and service interaction.</p>
+ */
 class ReservationControllerTest {
 
+    /** Mocked instance of the reservation service. */
     @Mock
     private ReservationService service;
 
+    /** Controller under test, injected with the mocked service. */
     @InjectMocks
     private ReservationController controller;
 
+    /**
+     * Initializes Mockito annotations before each test.
+     */
     @BeforeEach
     void setup() {
         MockitoAnnotations.openMocks(this);
     }
 
+    /**
+     * Verifies that the controller properly maps reservation domain objects into
+     * response DTOs when listing reservations.
+     */
     @Test
     void list_ShouldReturnMappedResponses() {
         Reservation r = new Reservation(1L, "John", "Beach Resort",
@@ -40,6 +57,10 @@ class ReservationControllerTest {
         assertEquals("John", responses.get(0).getGuestName());
     }
 
+    /**
+     * Ensures that creating a reservation delegates to the service and returns
+     * the properly mapped response DTO.
+     */
     @Test
     void create_ShouldReturnResponse() {
         ReservationRequest req = new ReservationRequest();
@@ -57,6 +78,10 @@ class ReservationControllerTest {
         verify(service, times(1)).create(req);
     }
 
+    /**
+     * Ensures that updating an existing reservation returns the correctly
+     * mapped updated reservation.
+     */
     @Test
     void update_ShouldReturnResponse() {
         ReservationRequest req = new ReservationRequest();
@@ -73,6 +98,11 @@ class ReservationControllerTest {
         assertEquals("Mike", response.getGuestName());
     }
 
+    /**
+     * Validates that canceling a reservation correctly returns a reservation
+     * with a {@link ReservationStatus#CANCELED} status and that the service is
+     * invoked as expected.
+     */
     @Test
     void cancel_ShouldReturnCanceledReservation() {
         Reservation r = new Reservation(1L, "Nina", "River View",
